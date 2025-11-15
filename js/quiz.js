@@ -3,7 +3,7 @@
 // ========================================
 
 // Quiz password - CHANGE THIS to your desired password
-const QUIZ_PASSWORD = "WAOW2025";
+const QUIZ_PASSWORD = "waow2025";
 
 // Quiz state
 let answers = {};
