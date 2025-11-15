@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesi 5: Finishing & Review - WAOW Season 6</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar-custom"></div>
+    </div>
+
+    <!-- Timer Widget -->
+    <div class="timer-widget">
+        <h6 class="mb-1">⏱️ Workshop Timer</h6>
+        <div class="timer-display">02:30:00</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="img/coder.jpeg" alt="CODER Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pengantar.html">Pengantar</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                            Materi
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sesi-1.html">Sesi 1: Setup & Konsep</a></li>
+                            <li><a class="dropdown-item" href="sesi-2.html">Sesi 2: Flask API CRUD</a></li>
+                            <li><a class="dropdown-item" href="sesi-3.html">Sesi 3: Frontend & Bootstrap</a></li>
+                            <li><a class="dropdown-item" href="sesi-4.html">Sesi 4: Integrasi Fetch API</a></li>
+                            <li><a class="dropdown-item active" href="sesi-5.html">Sesi 5: Finishing & Review</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="quiz.html">🎯 Quiz</a></li>
+                    <li class="nav-item"><a class="nav-link" href="errors.html">🔧 Troubleshooting</a></li>
+                    <li class="nav-item"><a class="nav-link" href="resources.html">📚 Resources</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="content-container">
+            <h1><i class="bi bi-check-circle me-2"></i>Sesi 5: Finishing & Review</h1>
+            <p class="lead">Durasi: 30 menit | Testing end-to-end, review konsep, dan next steps</p>
+
+            <hr class="my-4">
+
+            <!-- What We Built -->
+            <h2><i class="bi bi-trophy text-warning me-2"></i>Apa yang Sudah Kita Bangun?</h2>
+            
+            <div class="row g-4 my-4">
+                <div class="col-md-6">
+                    <div class="card h-100 border-primary">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="bi bi-server me-2"></i>Backend (Flask API)</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li>✅ Flask web framework</li>
+                                <li>✅ MySQL database integration</li>
+                                <li>✅ RESTful API dengan CRUD operations</li>
+                                <li>✅ 3 entities: Customers, Products, Transactions</li>
+                                <li>✅ JSON responses</li>
+                                <li>✅ CORS enabled</li>
+                                <li>✅ Error handling & validation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card h-100 border-success">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="bi bi-window me-2"></i>Frontend (Web Interface)</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li>✅ Landing page modern</li>
+                                <li>✅ Customer management page</li>
+                                <li>✅ Product inventory page</li>
+                                <li>✅ Transaction history viewer</li>
+                                <li>✅ Bootstrap 5 responsive design</li>
+                                <li>✅ Fetch API integration</li>
+                                <li>✅ Dynamic data loading</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End-to-End Testing -->
+            <h2><i class="bi bi-play-circle text-success me-2"></i>End-to-End Testing Checklist</h2>
+            
+            <p>Mari kita test semua fitur dari awal sampai akhir!</p>
+
+            <div class="card my-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Testing Checklist</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="fw-bold mb-3">Backend Testing:</h6>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="test1">
+                        <label class="form-check-label" for="test1">
+                            Flask server berjalan di http://127.0.0.1:5000
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="test2">
+                        <label class="form-check-label" for="test2">
+                            Database MySQL terhubung dengan benar
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="test3">
+                        <label class="form-check-label" for="test3">
+                            API endpoints response 200 OK di Postman
+                        </label>
+                    </div>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="test4">
+                        <label class="form-check-label" for="test4">
+                            CRUD operations work (Create, Read, Update, Delete)
+                        </label>
+                    </div>
+
+                    <h6 class="fw-bold mb-3">Frontend Testing:</h6>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="test5">
+                        <label class="form-check-label" for="test5">
+                            Landing page loading properly
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="test6">
+                        <label class="form-check-label" for="test6">
+                            Customer data tampil di table
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="test7">
+                        <label class="form-check-label" for="test7">
+                            Bisa add customer baru via form
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="test8">
+                        <label class="form-check-label" for="test8">
+                            Bisa edit customer yang ada
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="test9">
+                        <label class="form-check-label" for="test9">
+                            Bisa delete customer
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="test10">
+                        <label class="form-check-label" for="test10">
+                            Table auto-refresh after CRUD operations
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="test11">
+                        <label class="form-check-label" for="test11">
+                            No CORS errors di browser console
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recap: Key Concepts -->
+            <h2><i class="bi bi-lightbulb text-warning me-2"></i>Recap: Key Concepts</h2>
+            
+            <div class="accordion my-4" id="reviewAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#concept1">
+                            1. Client-Server Architecture
+                        </button>
+                    </h2>
+                    <div id="concept1" class="accordion-collapse collapse show" data-bs-parent="#reviewAccordion">
+                        <div class="accordion-body">
+                            <p><strong>Client (Browser)</strong> → sends HTTP request → <strong>Server (Flask)</strong> → query → <strong>Database (MySQL)</strong></p>
+                            <p>Server process data dan kirim response balik ke client dalam format JSON.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#concept2">
+                            2. RESTful API & HTTP Methods
+                        </button>
+                    </h2>
+                    <div id="concept2" class="accordion-collapse collapse" data-bs-parent="#reviewAccordion">
+                        <div class="accordion-body">
+                            <ul>
+                                <li><strong>GET</strong> - Read data (SELECT)</li>
+                                <li><strong>POST</strong> - Create data (INSERT)</li>
+                                <li><strong>PUT</strong> - Update data (UPDATE)</li>
+                                <li><strong>DELETE</strong> - Delete data (DELETE)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#concept3">
+                            3. CRUD Operations
+                        </button>
+                    </h2>
+                    <div id="concept3" class="accordion-collapse collapse" data-bs-parent="#reviewAccordion">
+                        <div class="accordion-body">
+                            <p><strong>CRUD</strong> = Create, Read, Update, Delete</p>
+                            <p>4 operasi dasar yang hampir semua aplikasi butuhkan untuk manage data.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#concept4">
+                            4. Fetch API & Async/Await
+                        </button>
+                    </h2>
+                    <div id="concept4" class="accordion-collapse collapse" data-bs-parent="#reviewAccordion">
+                        <div class="accordion-body">
+                            <p>Fetch API adalah cara modern JavaScript untuk melakukan HTTP request.</p>
+                            <p>Async/await membuat code asynchronous lebih mudah dibaca (looks like synchronous code).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#concept5">
+                            5. Bootstrap Framework
+                        </button>
+                    </h2>
+                    <div id="concept5" class="accordion-collapse collapse" data-bs-parent="#reviewAccordion">
+                        <div class="accordion-body">
+                            <p>Bootstrap provides pre-built components (navbar, cards, tables, forms, modals) yang responsive by default.</p>
+                            <p>Kita tidak perlu coding CSS dari nol!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What's Next? -->
+            <h2><i class="bi bi-rocket text-primary me-2"></i>What's Next? Level Up Your Skills!</h2>
+            
+            <div class="row g-4 my-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-shield-check text-success me-2"></i>Authentication & Security</h5>
+                            <ul class="small">
+                                <li>User login & registration</li>
+                                <li>JWT (JSON Web Tokens)</li>
+                                <li>Password hashing (bcrypt)</li>
+                                <li>Protected routes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-database text-primary me-2"></i>Advanced Database</h5>
+                            <ul class="small">
+                                <li>SQLAlchemy ORM</li>
+                                <li>Database migrations</li>
+                                <li>Relationships (Foreign Keys)</li>
+                                <li>Query optimization</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-cloud text-info me-2"></i>Deployment</h5>
+                            <ul class="small">
+                                <li>Deploy to Heroku/Railway/Render</li>
+                                <li>Docker containerization</li>
+                                <li>Environment variables</li>
+                                <li>Production best practices</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-code-square text-warning me-2"></i>Frontend Frameworks</h5>
+                            <ul class="small">
+                                <li>React.js untuk SPA</li>
+                                <li>Vue.js alternative</li>
+                                <li>State management</li>
+                                <li>Component-based architecture</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-robot text-danger me-2"></i>Add AI/ML Features</h5>
+                            <ul class="small">
+                                <li>Customer segmentation (clustering)</li>
+                                <li>Sales prediction</li>
+                                <li>Recommendation system</li>
+                                <li>Sentiment analysis</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-speedometer text-success me-2"></i>Performance & Testing</h5>
+                            <ul class="small">
+                                <li>API rate limiting</li>
+                                <li>Caching strategies</li>
+                                <li>Unit testing (pytest)</li>
+                                <li>Load testing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Message -->
+            <div class="info-box success my-4">
+                <h4 class="mb-3"><i class="bi bi-check-circle me-2"></i>Selamat! 🎉</h4>
+                <p>Kamu sudah berhasil membuat <strong>full-stack web application</strong> dengan:</p>
+                <ul class="mb-3">
+                    <li>✅ Backend API menggunakan Flask & MySQL</li>
+                    <li>✅ Frontend modern dengan Bootstrap 5</li>
+                    <li>✅ CRUD operations yang lengkap</li>
+                    <li>✅ Integration menggunakan Fetch API</li>
+                </ul>
+                <p class="mb-0">Ini adalah <strong>foundation</strong> yang solid untuk develop aplikasi web yang lebih kompleks! Keep learning & building! 🚀</p>
+            </div>
+
+            <!-- Resources -->
+            <h2><i class="bi bi-book text-info me-2"></i>Learning Resources</h2>
+            
+            <div class="row g-3 my-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h6 class="fw-bold">📚 Documentation</h6>
+                            <ul class="small mb-0">
+                                <li><a href="https://flask.palletsprojects.com" target="_blank">Flask Docs</a></li>
+                                <li><a href="https://getbootstrap.com" target="_blank">Bootstrap Docs</a></li>
+                                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank">Fetch API MDN</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h6 class="fw-bold">🎓 Free Courses</h6>
+                            <ul class="small mb-0">
+                                <li><a href="https://www.youtube.com/@coreyms" target="_blank">Corey Schafer (YouTube)</a></li>
+                                <li><a href="https://www.freecodecamp.org" target="_blank">freeCodeCamp</a></li>
+                                <li><a href="https://realpython.com" target="_blank">Real Python</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h6 class="fw-bold">💬 Communities</h6>
+                            <ul class="small mb-0">
+                                <li><a href="https://stackoverflow.com" target="_blank">Stack Overflow</a></li>
+                                <li><a href="https://reddit.com/r/flask" target="_blank">r/flask</a></li>
+                                <li><a href="https://discord.gg/python" target="_blank">Python Discord</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center my-5 py-4 bg-light rounded">
+                <h3 class="mb-4">Ready for the Quiz? 🎯</h3>
+                <p class="lead mb-4">Test your knowledge dengan ice breaking quiz!</p>
+                <a href="quiz.html" class="btn btn-custom btn-lg">
+                    <i class="bi bi-trophy me-2"></i>Take the Quiz
+                </a>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-buttons">
+                <a href="sesi-4.html" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Sesi 4
+                </a>
+                <a href="quiz.html" class="btn btn-custom">
+                    Ice Breaking Quiz<i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

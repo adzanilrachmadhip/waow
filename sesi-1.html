@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesi 1: Setup & Konsep - WAOW Season 6</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar-custom"></div>
+    </div>
+
+    <!-- Timer Widget -->
+    <div class="timer-widget">
+        <h6 class="mb-1">⏱️ Workshop Timer</h6>
+        <div class="timer-display">02:30:00</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="img/coder.jpeg" alt="CODER Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pengantar.html">Pengantar</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                            Materi
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item active" href="sesi-1.html">Sesi 1: Setup & Konsep</a></li>
+                            <li><a class="dropdown-item" href="sesi-2.html">Sesi 2: Flask API CRUD</a></li>
+                            <li><a class="dropdown-item" href="sesi-3.html">Sesi 3: Frontend & Bootstrap</a></li>
+                            <li><a class="dropdown-item" href="sesi-4.html">Sesi 4: Integrasi Fetch API</a></li>
+                            <li><a class="dropdown-item" href="sesi-5.html">Sesi 5: Finishing & Review</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="quiz.html">🎯 Quiz</a></li>
+                    <li class="nav-item"><a class="nav-link" href="errors.html">🔧 Troubleshooting</a></li>
+                    <li class="nav-item"><a class="nav-link" href="resources.html">📚 Resources</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="content-container">
+            <h1><i class="bi bi-gear-fill me-2"></i>Sesi 1: Setup Environment & Konsep Backend</h1>
+            <p class="lead">Durasi: 25 menit | Memahami arsitektur backend dan setup lingkungan kerja Flask</p>
+
+            <hr class="my-4">
+
+            <!-- Konsep Client-Server -->
+            <h2><i class="bi bi-diagram-3 text-primary me-2"></i>Arsitektur Client-Server</h2>
+            
+            <p>Sebelum kita coding, mari pahami dulu bagaimana web aplikasi modern bekerja!</p>
+
+            <div class="diagram-container">
+                <h5 class="mb-4">How Web Applications Work</h5>
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="text-center p-4 bg-white rounded shadow-sm">
+                            <i class="bi bi-laptop text-primary" style="font-size: 3rem;"></i>
+                            <h6 class="mt-3 fw-bold">Client (Browser)</h6>
+                            <p class="small text-muted mb-0">HTML, CSS, JavaScript</p>
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-center">
+                        <h3 class="text-primary">→</h3>
+                        <small class="text-muted">Request</small>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="text-center p-4 bg-white rounded shadow-sm">
+                            <i class="bi bi-server text-success" style="font-size: 3rem;"></i>
+                            <h6 class="mt-3 fw-bold">Server (Flask)</h6>
+                            <p class="small text-muted mb-0">Python, API Logic</p>
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-center">
+                        <h3 class="text-success">→</h3>
+                        <small class="text-muted">Query</small>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="text-center p-4 bg-white rounded shadow-sm">
+                            <i class="bi bi-database text-warning" style="font-size: 3rem;"></i>
+                            <h6 class="mt-3 fw-bold">Database (MySQL)</h6>
+                            <p class="small text-muted mb-0">Data Storage</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-1 text-center">
+                        <h3 class="text-info">←</h3>
+                        <small class="text-muted">Response</small>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-1 text-center">
+                        <h3 class="text-danger">←</h3>
+                        <small class="text-muted">Data</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3 my-4">
+                <div class="col-md-4">
+                    <div class="info-box info">
+                        <h6><i class="bi bi-1-circle-fill me-2"></i>Client (Frontend)</h6>
+                        <p class="mb-0 small">User interface yang dilihat pengguna. Berjalan di browser. Mengirim HTTP request ke server.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box success">
+                        <h6><i class="bi bi-2-circle-fill me-2"></i>Server (Backend)</h6>
+                        <p class="mb-0 small">Menerima request, proses logic bisnis, berkomunikasi dengan database, kirim response.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box warning">
+                        <h6><i class="bi bi-3-circle-fill me-2"></i>Database</h6>
+                        <p class="mb-0 small">Menyimpan data secara permanen. Diakses oleh server melalui query SQL.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESTful API -->
+            <h2><i class="bi bi-cloud-arrow-up text-info me-2"></i>Apa itu RESTful API?</h2>
+            
+            <p><strong>REST</strong> = <strong>RE</strong>presentational <strong>S</strong>tate <strong>T</strong>ransfer</p>
+            <p>Cara standar untuk aplikasi berkomunikasi melalui HTTP dengan format JSON.</p>
+
+            <h3>HTTP Methods (CRUD Operations)</h3>
+            
+            <div class="table-responsive my-4">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>HTTP Method</th>
+                            <th>CRUD</th>
+                            <th>Fungsi</th>
+                            <th>Contoh</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-success">
+                            <td><strong>GET</strong></td>
+                            <td>Read</td>
+                            <td>Ambil data</td>
+                            <td><code>GET /api/customers</code></td>
+                        </tr>
+                        <tr class="table-primary">
+                            <td><strong>POST</strong></td>
+                            <td>Create</td>
+                            <td>Buat data baru</td>
+                            <td><code>POST /api/customers</code></td>
+                        </tr>
+                        <tr class="table-warning">
+                            <td><strong>PUT</strong></td>
+                            <td>Update</td>
+                            <td>Update data</td>
+                            <td><code>PUT /api/customers/1</code></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td><strong>DELETE</strong></td>
+                            <td>Delete</td>
+                            <td>Hapus data</td>
+                            <td><code>DELETE /api/customers/1</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box info">
+                <h6><i class="bi bi-lightbulb me-2"></i>Contoh Request-Response</h6>
+                <p><strong>Request:</strong> <code>GET /api/customers/1</code></p>
+                <p><strong>Response:</strong></p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>{
+  "success": true,
+  "data": {
+    "CustomerID": 1,
+    "Gender": "Male",
+    "Age": 19,
+    "Annual_Income": 15,
+    "Spending_Score": 39
+  }
+}</pre>
+                </div>
+            </div>
+
+            <!-- Setup Environment -->
+            <h2><i class="bi bi-download text-success me-2"></i>Setup Environment</h2>
+            
+            <h3>Step 1: Cek Python Installation</h3>
+            
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre># macOS/Linux
+python3 --version
+
+# Windows
+python --version
+
+# Expected output: Python 3.8+ or higher</pre>
+            </div>
+
+            <div class="info-box warning">
+                <p class="mb-0"><strong>⚠️ Jika belum install:</strong> Download di <a href="https://python.org/downloads" target="_blank">python.org/downloads</a></p>
+            </div>
+
+            <h3>Step 2: Create Project Folder</h3>
+            
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre># Buat folder project
+mkdir waow-workshop
+cd waow-workshop</pre>
+            </div>
+
+            <h3>Step 3: Create Virtual Environment</h3>
+            
+            <p><strong>Kenapa Virtual Environment?</strong></p>
+            <ul>
+                <li>✅ Isolasi dependencies per project</li>
+                <li>✅ Hindari konflik library</li>
+                <li>✅ Best practice Python development</li>
+            </ul>
+
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre># macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# Jika berhasil, akan muncul (venv) di terminal</pre>
+            </div>
+
+            <h3>Step 4: Install Flask & Dependencies</h3>
+            
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>pip install Flask flask-cors PyMySQL python-dotenv</pre>
+            </div>
+
+            <div class="row g-3 my-3">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6><i class="bi bi-check-circle text-success me-2"></i>Flask</h6>
+                            <p class="small mb-0">Web framework utama</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6><i class="bi bi-check-circle text-success me-2"></i>flask-cors</h6>
+                            <p class="small mb-0">Enable CORS untuk API</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6><i class="bi bi-check-circle text-success me-2"></i>PyMySQL</h6>
+                            <p class="small mb-0">MySQL connector</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6><i class="bi bi-check-circle text-success me-2"></i>python-dotenv</h6>
+                            <p class="small mb-0">Manage environment variables</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Step 5: Project Structure</h3>
+            
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>waow-workshop/
+├── app.py              # Main Flask application
+├── .env                # Environment variables
+├── requirements.txt    # Dependencies list
+├── config/
+│   └── database.py    # Database connection
+├── routes/
+│   ├── customers.py   # Customer API routes
+│   ├── products.py    # Product API routes
+│   └── transactions.py # Transaction API routes
+├── templates/
+│   └── *.html         # HTML templates
+└── static/
+    ├── css/
+    └── js/</pre>
+            </div>
+
+            <!-- Test Installation -->
+            <h2><i class="bi bi-play-circle text-danger me-2"></i>Test Installation</h2>
+            
+            <p>Mari kita test apakah Flask sudah terinstall dengan benar!</p>
+
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre># Buat file test.py
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return 'Hello, WAOW Season 6!'
+
+if __name__ == '__main__':
+    app.run(debug=True)</pre>
+            </div>
+
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre># Jalankan
+python test.py
+
+# Buka browser: http://127.0.0.1:5000
+# Jika berhasil, akan muncul: "Hello, WAOW Season 6!"</pre>
+            </div>
+
+            <div class="info-box success">
+                <h6><i class="bi bi-check-circle me-2"></i>Selamat!</h6>
+                <p class="mb-0">Jika muncul "Hello, WAOW Season 6!" di browser, berarti setup kamu <strong>BERHASIL!</strong> ✅</p>
+            </div>
+
+            <!-- Key Takeaways -->
+            <h2><i class="bi bi-bookmark-check text-warning me-2"></i>Key Takeaways</h2>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="card border-0 bg-light h-100">
+                        <div class="card-body">
+                            <h6 class="fw-bold">✅ Konsep yang Dipelajari:</h6>
+                            <ul class="mb-0 small">
+                                <li>Arsitektur Client-Server</li>
+                                <li>RESTful API & HTTP Methods</li>
+                                <li>CRUD Operations</li>
+                                <li>Request-Response flow</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 bg-light h-100">
+                        <div class="card-body">
+                            <h6 class="fw-bold">✅ Skills yang Didapat:</h6>
+                            <ul class="mb-0 small">
+                                <li>Setup Python environment</li>
+                                <li>Install Flask & dependencies</li>
+                                <li>Membuat project structure</li>
+                                <li>Menjalankan Flask app pertama</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-buttons">
+                <a href="pengantar.html" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Pengantar
+                </a>
+                <a href="sesi-2.html" class="btn btn-custom">
+                    Sesi 2: Flask API CRUD<i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

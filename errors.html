@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting - WAOW Season 6</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar-custom"></div>
+    </div>
+
+    <!-- Timer Widget -->
+    <div class="timer-widget">
+        <h6 class="mb-1">⏱️ Workshop Timer</h6>
+        <div class="timer-display">02:30:00</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="img/coder.jpeg" alt="CODER Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pengantar.html">Pengantar</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Materi
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sesi-1.html">Sesi 1: Setup & Konsep</a></li>
+                            <li><a class="dropdown-item" href="sesi-2.html">Sesi 2: Flask API CRUD</a></li>
+                            <li><a class="dropdown-item" href="sesi-3.html">Sesi 3: Frontend & Bootstrap</a></li>
+                            <li><a class="dropdown-item" href="sesi-4.html">Sesi 4: Integrasi Fetch API</a></li>
+                            <li><a class="dropdown-item" href="sesi-5.html">Sesi 5: Finishing & Review</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="quiz.html">🎯 Quiz</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="errors.html">🔧 Troubleshooting</a></li>
+                    <li class="nav-item"><a class="nav-link" href="resources.html">📚 Resources</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="content-container">
+            <h1><i class="bi bi-tools me-2"></i>Common Errors & Solutions</h1>
+            <p class="lead">Panduan troubleshooting untuk masalah yang sering terjadi</p>
+
+            <hr class="my-4">
+
+            <!-- Quick Search -->
+            <div class="mb-4">
+                <input type="text" class="form-control form-control-lg" id="errorSearch" placeholder="🔍 Search error..." onkeyup="searchErrors()">
+            </div>
+
+            <!-- Python & Environment Errors -->
+            <h2><i class="bi bi-terminal text-primary me-2"></i>Python & Environment Errors</h2>
+            
+            <div class="accordion mb-4" id="pythonErrors">
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error1">
+                            ❌ "python: command not found" atau "python3: command not found"
+                        </button>
+                    </h2>
+                    <div id="error1" class="accordion-collapse collapse" data-bs-parent="#pythonErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> Python belum terinstall atau tidak ada di PATH</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># macOS: Install via Homebrew
+brew install python3
+
+# Windows: Download dari python.org
+# Centang "Add Python to PATH" saat install
+
+# Verify installation
+python3 --version</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error2">
+                            ❌ "No module named 'flask'"
+                        </button>
+                    </h2>
+                    <div id="error2" class="accordion-collapse collapse" data-bs-parent="#pythonErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> Flask belum terinstall atau virtual environment belum diaktifkan</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># Pastikan virtual environment aktif (ada tulisan (venv))
+source venv/bin/activate  # macOS/Linux
+venv\Scripts\activate     # Windows
+
+# Install Flask
+pip install Flask flask-cors PyMySQL python-dotenv
+
+# Verify
+pip list | grep Flask</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error3">
+                            ❌ "Permission denied" saat install package
+                        </button>
+                    </h2>
+                    <div id="error3" class="accordion-collapse collapse" data-bs-parent="#pythonErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> Tidak ada permission untuk install global package</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># JANGAN gunakan sudo!
+# Gunakan virtual environment (recommended):
+python3 -m venv venv
+source venv/bin/activate
+pip install flask
+
+# Atau install untuk user saja:
+pip install --user flask</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database Errors -->
+            <h2><i class="bi bi-database text-warning me-2"></i>Database (MySQL) Errors</h2>
+            
+            <div class="accordion mb-4" id="databaseErrors">
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error4">
+                            ❌ "Can't connect to MySQL server"
+                        </button>
+                    </h2>
+                    <div id="error4" class="accordion-collapse collapse" data-bs-parent="#databaseErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> MySQL server tidak berjalan atau credentials salah</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># Check MySQL running
+# macOS:
+brew services list
+
+# Start MySQL
+brew services start mysql
+
+# Windows: Services → MySQL → Start
+
+# Test connection
+mysql -u root -p
+
+# Check .env file
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password  ← Pastikan ini benar!
+DB_NAME=shop</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error5">
+                            ❌ "Unknown database 'shop'"
+                        </button>
+                    </h2>
+                    <div id="error5" class="accordion-collapse collapse" data-bs-parent="#databaseErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> Database 'shop' belum dibuat</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># Login ke MySQL
+mysql -u root -p
+
+# Create database
+CREATE DATABASE shop;
+
+# Import data
+USE shop;
+SOURCE Shop.sql;
+
+# Atau via command line
+mysql -u root -p shop < Shop.sql</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error6">
+                            ❌ "Access denied for user 'root'@'localhost'"
+                        </button>
+                    </h2>
+                    <div id="error6" class="accordion-collapse collapse" data-bs-parent="#databaseErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> Password salah atau user tidak ada</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># Reset MySQL password (macOS)
+mysql.server stop
+mysqld_safe --skip-grant-tables &
+mysql -u root
+
+# Di MySQL prompt:
+FLUSH PRIVILEGES;
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
+quit;
+
+# Restart MySQL
+mysql.server restart
+
+# Update .env file dengan password baru</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flask Errors -->
+            <h2><i class="bi bi-server text-success me-2"></i>Flask Application Errors</h2>
+            
+            <div class="accordion mb-4" id="flaskErrors">
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error7">
+                            ❌ "Address already in use" (Port 5000)
+                        </button>
+                    </h2>
+                    <div id="error7" class="accordion-collapse collapse" data-bs-parent="#flaskErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> Port 5000 sudah digunakan process lain</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># Option 1: Kill process di port 5000
+# macOS/Linux:
+lsof -ti:5000 | xargs kill -9
+
+# Windows:
+netstat -ano | findstr :5000
+taskkill /PID [PID_NUMBER] /F
+
+# Option 2: Ganti port di app.py
+app.run(debug=True, port=5001)  # Ganti ke 5001</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error8">
+                            ❌ "404 Not Found" untuk API endpoint
+                        </button>
+                    </h2>
+                    <div id="error8" class="accordion-collapse collapse" data-bs-parent="#flaskErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> Route tidak terdaftar atau URL salah</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># Check:
+1. Blueprint registered di app.py?
+   app.register_blueprint(customers_bp, url_prefix='/api/customers')
+
+2. URL benar?
+   ✅ http://127.0.0.1:5000/api/customers/
+   ❌ http://127.0.0.1:5000/customers/
+
+3. Flask server running?
+   python app.py
+
+4. Check available routes:
+   flask routes  # Di terminal</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error9">
+                            ❌ "TemplateNotFound: index.html"
+                        </button>
+                    </h2>
+                    <div id="error9" class="accordion-collapse collapse" data-bs-parent="#flaskErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> Template file tidak ditemukan</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># Check struktur folder:
+project/
+├── app.py
+├── templates/       ← Folder HARUS bernama "templates"
+│   └── index.html   ← File ada di sini
+
+# Pastikan:
+1. Folder bernama "templates" (bukan "template")
+2. File ada di dalam folder templates/
+3. app.py di level yang sama dengan folder templates/</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frontend/CORS Errors -->
+            <h2><i class="bi bi-browser-chrome text-danger me-2"></i>Frontend & CORS Errors</h2>
+            
+            <div class="accordion mb-4" id="frontendErrors">
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error10">
+                            ❌ CORS Error: "Access-Control-Allow-Origin"
+                        </button>
+                    </h2>
+                    <div id="error10" class="accordion-collapse collapse" data-bs-parent="#frontendErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> Browser block request karena CORS policy</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># Install flask-cors
+pip install flask-cors
+
+# Di app.py:
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)  # Enable CORS untuk semua routes
+
+# Restart Flask server!
+# Ctrl+C lalu python app.py</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error11">
+                            ❌ "Failed to fetch" atau "Network Error"
+                        </button>
+                    </h2>
+                    <div id="error11" class="accordion-collapse collapse" data-bs-parent="#frontendErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> Frontend tidak bisa connect ke backend</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># Check:
+1. Flask server running?
+   python app.py
+
+2. URL benar di JavaScript?
+   const API_URL = 'http://127.0.0.1:5000/api';
+
+3. Test di browser langsung:
+   http://127.0.0.1:5000/api/customers/
+
+4. Check browser console (F12) untuk detail error</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item error-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error12">
+                            ❌ Data tidak muncul di table (table kosong)
+                        </button>
+                    </h2>
+                    <div id="error12" class="accordion-collapse collapse" data-bs-parent="#frontendErrors">
+                        <div class="accordion-body">
+                            <p><strong>Problem:</strong> JavaScript error atau API tidak return data</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre># Debug steps:
+1. Buka Browser Console (F12)
+2. Check ada error JavaScript?
+3. Check Network tab:
+   - Request sent?
+   - Response status 200?
+   - Response body ada data?
+
+4. Test API di Postman:
+   GET http://127.0.0.1:5000/api/customers/
+
+5. Add console.log() di JavaScript:
+   console.log(data);  // Lihat data yang diterima
+
+6. Check element ID benar:
+   getElementById('customersTable')  // ID match?</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- General Tips -->
+            <h2><i class="bi bi-lightbulb text-info me-2"></i>General Debugging Tips</h2>
+            
+            <div class="row g-4 my-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5><i class="bi bi-terminal text-primary me-2"></i>Terminal Tips</h5>
+                            <ul class="small mb-0">
+                                <li>Baca error message dengan teliti</li>
+                                <li>Copy error message ke Google</li>
+                                <li>Check line number yang error</li>
+                                <li>Gunakan print() untuk debug</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5><i class="bi bi-browser-chrome text-success me-2"></i>Browser Tips</h5>
+                            <ul class="small mb-0">
+                                <li>Selalu buka Console (F12)</li>
+                                <li>Check Network tab untuk HTTP requests</li>
+                                <li>Clear cache jika ada masalah CSS/JS</li>
+                                <li>Use Incognito mode untuk test</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5><i class="bi bi-arrow-clockwise text-warning me-2"></i>General Tips</h5>
+                            <ul class="small mb-0">
+                                <li>Restart Flask server setelah edit code</li>
+                                <li>Refresh browser setelah edit JS/CSS</li>
+                                <li>Check typo di variable names</li>
+                                <li>Pastikan indentation benar (Python)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5><i class="bi bi-people text-danger me-2"></i>Ask for Help</h5>
+                            <ul class="small mb-0">
+                                <li>Tanya di workshop chat</li>
+                                <li>Screenshot error message</li>
+                                <li>Share code snippet yang error</li>
+                                <li>Stack Overflow untuk specific errors</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Still Having Issues? -->
+            <div class="info-box warning mt-5">
+                <h5><i class="bi bi-question-circle me-2"></i>Still Having Issues?</h5>
+                <p>Jika masalah belum teratasi:</p>
+                <ul class="mb-0">
+                    <li>📸 Screenshot error message lengkap</li>
+                    <li>📝 Catat langkah-langkah yang sudah dilakukan</li>
+                    <li>💬 Tanya di chat workshop atau raise hand</li>
+                    <li>🔍 Search error di Google/Stack Overflow</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    
+    <!-- Search functionality -->
+    <script>
+        function searchErrors() {
+            const input = document.getElementById('errorSearch').value.toLowerCase();
+            const items = document.querySelectorAll('.error-item');
+            
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(input)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

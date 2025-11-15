@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesi 2: Flask API CRUD - WAOW Season 6</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar-custom"></div>
+    </div>
+
+    <!-- Timer Widget -->
+    <div class="timer-widget">
+        <h6 class="mb-1">⏱️ Workshop Timer</h6>
+        <div class="timer-display">02:30:00</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="img/coder.jpeg" alt="CODER Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pengantar.html">Pengantar</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                            Materi
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sesi-1.html">Sesi 1: Setup & Konsep</a></li>
+                            <li><a class="dropdown-item active" href="sesi-2.html">Sesi 2: Flask API CRUD</a></li>
+                            <li><a class="dropdown-item" href="sesi-3.html">Sesi 3: Frontend & Bootstrap</a></li>
+                            <li><a class="dropdown-item" href="sesi-4.html">Sesi 4: Integrasi Fetch API</a></li>
+                            <li><a class="dropdown-item" href="sesi-5.html">Sesi 5: Finishing & Review</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="quiz.html">🎯 Quiz</a></li>
+                    <li class="nav-item"><a class="nav-link" href="errors.html">🔧 Troubleshooting</a></li>
+                    <li class="nav-item"><a class="nav-link" href="resources.html">📚 Resources</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="content-container">
+            <h1><i class="bi bi-server me-2"></i>Sesi 2: Membangun Flask API dengan CRUD</h1>
+            <p class="lead">Durasi: 40 menit | Membuat RESTful API lengkap dengan database MySQL</p>
+
+            <hr class="my-4">
+
+            <!-- Database Setup -->
+            <h2><i class="bi bi-database text-warning me-2"></i>Step 1: Database Setup</h2>
+            
+            <h3>Import Database</h3>
+            <p>Kita sudah sediakan database <code>Shop.sql</code> yang berisi:</p>
+            <ul>
+                <li>✅ mall_customer - Data pelanggan mall</li>
+                <li>✅ products - Data produk & inventory</li>
+                <li>✅ product_categories - Kategori produk</li>
+                <li>✅ transactions - Riwayat transaksi</li>
+                <li>✅ Sample data untuk testing</li>
+            </ul>
+
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre># Import database via MySQL CLI
+mysql -u root -p
+
+CREATE DATABASE shop;
+USE shop;
+SOURCE Shop.sql;
+
+# Atau via MySQL Workbench:
+# Server → Data Import → Import from Self-Contained File</pre>
+            </div>
+
+            <h3>Struktur Database (ERD)</h3>
+            <div class="info-box info">
+                <h6>📊 Entity Relationship Diagram</h6>
+                <ul class="mb-0">
+                    <li><strong>mall_customer</strong> - CustomerID, Gender, Age, Annual_Income, Spending_Score</li>
+                    <li><strong>products</strong> - ProductID, CategoryID, Name, Price, Stock</li>
+                    <li><strong>transactions</strong> - TransactionID, CustomerID, TotalAmount, PaymentMethod</li>
+                </ul>
+            </div>
+
+            <!-- Database Configuration -->
+            <h2><i class="bi bi-gear text-primary me-2"></i>Step 2: Database Configuration</h2>
+            
+            <h3>Create .env File</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre># .env
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password_here
+DB_NAME=shop
+
+FLASK_ENV=development
+FLASK_DEBUG=True</pre>
+            </div>
+
+            <div class="info-box warning">
+                <p class="mb-0"><strong>⚠️ Penting:</strong> Ganti <code>your_password_here</code> dengan password MySQL kamu!</p>
+            </div>
+
+            <h3>Create config/database.py</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>import pymysql
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+DB_CONFIG = {
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'user': os.getenv('DB_USER', 'root'),
+    'password': os.getenv('DB_PASSWORD', ''),
+    'database': os.getenv('DB_NAME', 'shop'),
+    'charset': 'utf8mb4',
+    'cursorclass': pymysql.cursors.DictCursor
+}
+
+def get_db_connection():
+    try:
+        connection = pymysql.connect(**DB_CONFIG)
+        return connection
+    except pymysql.Error as e:
+        print(f"Error: {e}")
+        return None
+
+def execute_query(query, params=None, fetch_one=False, fetch_all=True):
+    connection = get_db_connection()
+    if not connection:
+        return None
+    
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(query, params)
+            
+            if fetch_one:
+                result = cursor.fetchone()
+            elif fetch_all:
+                result = cursor.fetchall()
+            else:
+                connection.commit()
+                result = cursor.lastrowid if cursor.lastrowid else True
+                
+        return result
+    except pymysql.Error as e:
+        print(f"Query error: {e}")
+        connection.rollback()
+        return None
+    finally:
+        connection.close()</pre>
+            </div>
+
+            <!-- Main Flask App -->
+            <h2><i class="bi bi-file-code text-success me-2"></i>Step 3: Main Flask Application</h2>
+            
+            <h3>Create app.py</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>from flask import Flask
+from flask_cors import CORS
+from routes.customers import customers_bp
+from routes.products import products_bp
+
+app = Flask(__name__)
+CORS(app)  # Enable CORS untuk semua routes
+
+# Register blueprints
+app.register_blueprint(customers_bp, url_prefix='/api/customers')
+app.register_blueprint(products_bp, url_prefix='/api/products')
+
+@app.route('/')
+def home():
+    return {'message': 'Welcome to WAOW Season 6 API!'}
+
+@app.route('/health')
+def health():
+    return {'status': 'healthy', 'version': '1.0.0'}
+
+if __name__ == '__main__':
+    print("🚀 Flask API running on http://127.0.0.1:5000")
+    app.run(debug=True, host='0.0.0.0', port=5000)</pre>
+            </div>
+
+            <div class="info-box info">
+                <h6><i class="bi bi-lightbulb me-2"></i>Apa itu Blueprint?</h6>
+                <p class="mb-0">Blueprint adalah cara Flask untuk mengorganisir routes. Seperti membagi kode menjadi modul-modul terpisah agar lebih rapi!</p>
+            </div>
+
+            <!-- CRUD Implementation -->
+            <h2><i class="bi bi-list-check text-danger me-2"></i>Step 4: Implementasi CRUD - Customers API</h2>
+            
+            <h3>Create routes/customers.py</h3>
+            
+            <h4>1. GET - Read All Customers</h4>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>from flask import Blueprint, request, jsonify
+from config.database import execute_query
+
+customers_bp = Blueprint('customers', __name__)
+
+@customers_bp.route('/', methods=['GET'])
+def get_all_customers():
+    """Get all customers"""
+    query = "SELECT * FROM mall_customer ORDER BY CustomerID DESC"
+    customers = execute_query(query)
+    
+    if customers is None:
+        return jsonify({'error': 'Database error'}), 500
+    
+    return jsonify({
+        'success': True,
+        'data': customers,
+        'total': len(customers)
+    })</pre>
+            </div>
+
+            <h4>2. GET - Read Single Customer</h4>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>@customers_bp.route('/&lt;int:customer_id&gt;', methods=['GET'])
+def get_customer(customer_id):
+    """Get single customer by ID"""
+    query = "SELECT * FROM mall_customer WHERE CustomerID = %s"
+    customer = execute_query(query, (customer_id,), fetch_one=True)
+    
+    if not customer:
+        return jsonify({'error': 'Customer not found'}), 404
+    
+    return jsonify({
+        'success': True,
+        'data': customer
+    })</pre>
+            </div>
+
+            <h4>3. POST - Create Customer</h4>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>@customers_bp.route('/', methods=['POST'])
+def create_customer():
+    """Create new customer"""
+    data = request.get_json()
+    
+    # Validation
+    required = ['Gender', 'Age', 'Annual_Income', 'Spending_Score']
+    for field in required:
+        if field not in data:
+            return jsonify({'error': f'Missing: {field}'}), 400
+    
+    query = """
+        INSERT INTO mall_customer (Gender, Age, Annual_Income, Spending_Score)
+        VALUES (%s, %s, %s, %s)
+    """
+    
+    result = execute_query(
+        query,
+        (data['Gender'], data['Age'], data['Annual_Income'], data['Spending_Score']),
+        fetch_all=False
+    )
+    
+    if result:
+        return jsonify({
+            'success': True,
+            'message': 'Customer created',
+            'customer_id': result
+        }), 201
+    
+    return jsonify({'error': 'Failed to create'}), 500</pre>
+            </div>
+
+            <h4>4. PUT - Update Customer</h4>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>@customers_bp.route('/&lt;int:customer_id&gt;', methods=['PUT'])
+def update_customer(customer_id):
+    """Update customer"""
+    data = request.get_json()
+    
+    update_fields = []
+    params = []
+    
+    allowed = ['Gender', 'Age', 'Annual_Income', 'Spending_Score']
+    for field in allowed:
+        if field in data:
+            update_fields.append(f"{field} = %s")
+            params.append(data[field])
+    
+    if not update_fields:
+        return jsonify({'error': 'No fields to update'}), 400
+    
+    params.append(customer_id)
+    query = f"UPDATE mall_customer SET {', '.join(update_fields)} WHERE CustomerID = %s"
+    
+    result = execute_query(query, tuple(params), fetch_all=False)
+    
+    if result:
+        return jsonify({'success': True, 'message': 'Updated'})
+    
+    return jsonify({'error': 'Failed to update'}), 500</pre>
+            </div>
+
+            <h4>5. DELETE - Delete Customer</h4>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>@customers_bp.route('/&lt;int:customer_id&gt;', methods=['DELETE'])
+def delete_customer(customer_id):
+    """Delete customer"""
+    query = "DELETE FROM mall_customer WHERE CustomerID = %s"
+    result = execute_query(query, (customer_id,), fetch_all=False)
+    
+    if result:
+        return jsonify({'success': True, 'message': 'Deleted'})
+    
+    return jsonify({'error': 'Failed to delete'}), 500</pre>
+            </div>
+
+            <!-- Testing with Postman -->
+            <h2><i class="bi bi-play-circle text-info me-2"></i>Step 5: Testing dengan Postman</h2>
+            
+            <h3>Jalankan Flask Server</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>python app.py
+
+# Output:
+# 🚀 Flask API running on http://127.0.0.1:5000
+#  * Debug mode: on</pre>
+            </div>
+
+            <h3>Test Endpoints di Postman</h3>
+            
+            <div class="table-responsive my-4">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>URL</th>
+                            <th>Expected Response</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-success">
+                            <td><span class="badge bg-success">GET</span></td>
+                            <td><code>http://127.0.0.1:5000/api/customers/</code></td>
+                            <td>List all customers</td>
+                        </tr>
+                        <tr class="table-info">
+                            <td><span class="badge bg-success">GET</span></td>
+                            <td><code>http://127.0.0.1:5000/api/customers/1</code></td>
+                            <td>Single customer data</td>
+                        </tr>
+                        <tr class="table-primary">
+                            <td><span class="badge bg-primary">POST</span></td>
+                            <td><code>http://127.0.0.1:5000/api/customers/</code></td>
+                            <td>Customer created (201)</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <td><span class="badge bg-warning">PUT</span></td>
+                            <td><code>http://127.0.0.1:5000/api/customers/1</code></td>
+                            <td>Customer updated</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td><span class="badge bg-danger">DELETE</span></td>
+                            <td><code>http://127.0.0.1:5000/api/customers/1</code></td>
+                            <td>Customer deleted</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Contoh POST Request Body</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>{
+  "Gender": "Female",
+  "Age": 25,
+  "Annual_Income": 50,
+  "Spending_Score": 75
+}</pre>
+            </div>
+
+            <!-- Products API Quick Example -->
+            <h2><i class="bi bi-box text-success me-2"></i>Products API (Similar Pattern)</h2>
+            
+            <p>Products API menggunakan pattern yang sama dengan Customers API!</p>
+            
+            <div class="info-box success">
+                <h6>✅ Products Endpoints:</h6>
+                <ul class="mb-0">
+                    <li><code>GET /api/products/</code> - Get all products</li>
+                    <li><code>GET /api/products/:id</code> - Get single product</li>
+                    <li><code>POST /api/products/</code> - Create product</li>
+                    <li><code>PUT /api/products/:id</code> - Update product</li>
+                    <li><code>DELETE /api/products/:id</code> - Delete product</li>
+                    <li><code>GET /api/products/categories</code> - Get all categories</li>
+                </ul>
+            </div>
+
+            <!-- Common Errors -->
+            <h2><i class="bi bi-exclamation-triangle text-warning me-2"></i>Common Errors & Solutions</h2>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="info-box danger">
+                        <h6>❌ Error: Can't connect to MySQL</h6>
+                        <p class="small mb-0"><strong>Solution:</strong> Check .env credentials, make sure MySQL running</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-box danger">
+                        <h6>❌ Error: CORS policy blocked</h6>
+                        <p class="small mb-0"><strong>Solution:</strong> Install flask-cors: <code>pip install flask-cors</code></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-box danger">
+                        <h6>❌ Error: 404 Not Found</h6>
+                        <p class="small mb-0"><strong>Solution:</strong> Check URL dan Blueprint registration</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="info-box danger">
+                        <h6>❌ Error: 500 Internal Server Error</h6>
+                        <p class="small mb-0"><strong>Solution:</strong> Check terminal untuk error details</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Takeaways -->
+            <h2><i class="bi bi-bookmark-check text-success me-2"></i>Key Takeaways</h2>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="card border-0 bg-light">
+                        <div class="card-body">
+                            <h6 class="fw-bold">✅ Yang Sudah Dibuat:</h6>
+                            <ul class="mb-0 small">
+                                <li>Database configuration dengan PyMySQL</li>
+                                <li>Main Flask app dengan CORS</li>
+                                <li>Complete CRUD API untuk Customers</li>
+                                <li>Blueprint untuk modular code</li>
+                                <li>Error handling & validation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 bg-light">
+                        <div class="card-body">
+                            <h6 class="fw-bold">✅ Skills yang Didapat:</h6>
+                            <ul class="mb-0 small">
+                                <li>Membuat RESTful API dengan Flask</li>
+                                <li>CRUD operations dengan MySQL</li>
+                                <li>Request validation</li>
+                                <li>JSON response formatting</li>
+                                <li>Testing API dengan Postman</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box warning mt-4">
+                <h6><i class="bi bi-coffee me-2"></i>Break Time!</h6>
+                <p class="mb-0">Setelah sesi ini, mari kita <strong>istirahat 10 menit</strong> sebelum lanjut ke Frontend! ☕</p>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-buttons">
+                <a href="sesi-1.html" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Sesi 1
+                </a>
+                <a href="sesi-3.html" class="btn btn-custom">
+                    Sesi 3: Frontend & Bootstrap<i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

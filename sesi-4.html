@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesi 4: Integrasi Fetch API - WAOW Season 6</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar-custom"></div>
+    </div>
+
+    <!-- Timer Widget -->
+    <div class="timer-widget">
+        <h6 class="mb-1">⏱️ Workshop Timer</h6>
+        <div class="timer-display">02:30:00</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="img/coder.jpeg" alt="CODER Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pengantar.html">Pengantar</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                            Materi
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sesi-1.html">Sesi 1: Setup & Konsep</a></li>
+                            <li><a class="dropdown-item" href="sesi-2.html">Sesi 2: Flask API CRUD</a></li>
+                            <li><a class="dropdown-item" href="sesi-3.html">Sesi 3: Frontend & Bootstrap</a></li>
+                            <li><a class="dropdown-item active" href="sesi-4.html">Sesi 4: Integrasi Fetch API</a></li>
+                            <li><a class="dropdown-item" href="sesi-5.html">Sesi 5: Finishing & Review</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="quiz.html">🎯 Quiz</a></li>
+                    <li class="nav-item"><a class="nav-link" href="errors.html">🔧 Troubleshooting</a></li>
+                    <li class="nav-item"><a class="nav-link" href="resources.html">📚 Resources</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="content-container">
+            <h1><i class="bi bi-arrow-left-right me-2"></i>Sesi 4: Integrasi Backend-Frontend</h1>
+            <p class="lead">Durasi: 30 menit | Menghubungkan Frontend dengan Backend API menggunakan Fetch API</p>
+
+            <hr class="my-4">
+
+            <!-- Apa itu Fetch API? -->
+            <h2><i class="bi bi-cloud-download text-primary me-2"></i>Apa itu Fetch API?</h2>
+            
+            <p><strong>Fetch API</strong> adalah cara modern JavaScript untuk melakukan HTTP request ke server (API).</p>
+
+            <div class="row g-4 my-4">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="display-4 text-success">✅</div>
+                        <h5 class="mt-3">Modern & Simple</h5>
+                        <p class="text-muted">Lebih mudah dibanding XMLHttpRequest yang lama</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="display-4 text-primary">⚡</div>
+                        <h5 class="mt-3">Promise-based</h5>
+                        <p class="text-muted">Menggunakan async/await untuk code yang clean</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="display-4 text-warning">🌐</div>
+                        <h5 class="mt-3">Built-in Browser</h5>
+                        <p class="text-muted">Tidak perlu library tambahan!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Basic Fetch Syntax -->
+            <h2><i class="bi bi-code-square text-info me-2"></i>Basic Fetch Syntax</h2>
+            
+            <h3>GET Request (Ambil Data)</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>// Simple GET request
+fetch('http://127.0.0.1:5000/api/customers/')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+// Atau dengan async/await (RECOMMENDED)
+async function getCustomers() {
+    try {
+        const response = await fetch('http://127.0.0.1:5000/api/customers/');
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}</pre>
+            </div>
+
+            <h3>POST Request (Buat Data Baru)</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>async function addCustomer() {
+    const customerData = {
+        Gender: 'Female',
+        Age: 25,
+        Annual_Income: 50,
+        Spending_Score: 75
+    };
+    
+    try {
+        const response = await fetch('http://127.0.0.1:5000/api/customers/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(customerData)
+        });
+        
+        const data = await response.json();
+        console.log('Success:', data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}</pre>
+            </div>
+
+            <h3>PUT Request (Update Data)</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>async function updateCustomer(customerId) {
+    const updatedData = {
+        Age: 26,
+        Annual_Income: 55
+    };
+    
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/api/customers/${customerId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        });
+        
+        const data = await response.json();
+        console.log('Updated:', data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}</pre>
+            </div>
+
+            <h3>DELETE Request (Hapus Data)</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>async function deleteCustomer(customerId) {
+    if (!confirm('Are you sure?')) return;
+    
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/api/customers/${customerId}`, {
+            method: 'DELETE'
+        });
+        
+        const data = await response.json();
+        console.log('Deleted:', data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}</pre>
+            </div>
+
+            <!-- Real Implementation -->
+            <h2><i class="bi bi-gear-fill text-success me-2"></i>Implementasi Lengkap: Load & Display Data</h2>
+            
+            <h3>Step 1: Load Customers dari API</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>// static/js/customers.js
+const API_URL = 'http://127.0.0.1:5000/api';
+
+async function loadCustomers() {
+    try {
+        const response = await fetch(`${API_URL}/customers/`);
+        const data = await response.json();
+        
+        if (data.success) {
+            displayCustomers(data.data);
+        }
+    } catch (error) {
+        console.error('Error loading customers:', error);
+    }
+}</pre>
+            </div>
+
+            <h3>Step 2: Display Data ke Table</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>function displayCustomers(customers) {
+    const tableBody = document.getElementById('customersTable');
+    
+    if (customers.length === 0) {
+        tableBody.innerHTML = '&lt;tr&gt;&lt;td colspan="5"&gt;No data&lt;/td&gt;&lt;/tr&gt;';
+        return;
+    }
+    
+    tableBody.innerHTML = customers.map(customer => `
+        &lt;tr&gt;
+            &lt;td&gt;${customer.CustomerID}&lt;/td&gt;
+            &lt;td&gt;${customer.Gender}&lt;/td&gt;
+            &lt;td&gt;${customer.Age}&lt;/td&gt;
+            &lt;td&gt;$${customer.Annual_Income}K&lt;/td&gt;
+            &lt;td&gt;
+                &lt;button class="btn btn-sm btn-warning" onclick="editCustomer(${customer.CustomerID})"&gt;
+                    Edit
+                &lt;/button&gt;
+                &lt;button class="btn btn-sm btn-danger" onclick="deleteCustomer(${customer.CustomerID})"&gt;
+                    Delete
+                &lt;/button&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    `).join('');
+}</pre>
+            </div>
+
+            <h3>Step 3: Create Customer dari Form</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>async function addCustomer() {
+    // Ambil nilai dari form
+    const gender = document.getElementById('addGender').value;
+    const age = document.getElementById('addAge').value;
+    const income = document.getElementById('addIncome').value;
+    const spending = document.getElementById('addSpending').value;
+    
+    // Validation
+    if (!gender || !age || !income || !spending) {
+        alert('Please fill all fields!');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_URL}/customers/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                Gender: gender,
+                Age: parseInt(age),
+                Annual_Income: parseInt(income),
+                Spending_Score: parseInt(spending)
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('Customer added successfully!');
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addModal'));
+            modal.hide();
+            
+            // Reset form
+            document.getElementById('addCustomerForm').reset();
+            
+            // Reload table
+            loadCustomers();
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to add customer!');
+    }
+}</pre>
+            </div>
+
+            <h3>Step 4: Auto-load on Page Load</h3>
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>// Load data saat halaman dibuka
+document.addEventListener('DOMContentLoaded', function() {
+    loadCustomers();
+});</pre>
+            </div>
+
+            <!-- Complete Example -->
+            <h2><i class="bi bi-file-earmark-code text-danger me-2"></i>Complete JavaScript File</h2>
+            
+            <div class="code-block">
+                <button class="copy-btn">Copy</button>
+                <pre>// static/js/customers.js - Complete Example
+const API_URL = 'http://127.0.0.1:5000/api';
+
+// Load all customers
+async function loadCustomers() {
+    try {
+        const response = await fetch(`${API_URL}/customers/`);
+        const data = await response.json();
+        
+        if (data.success) {
+            displayCustomers(data.data);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Display customers in table
+function displayCustomers(customers) {
+    const tableBody = document.getElementById('customersTable');
+    
+    tableBody.innerHTML = customers.map(customer => `
+        &lt;tr&gt;
+            &lt;td&gt;${customer.CustomerID}&lt;/td&gt;
+            &lt;td&gt;${customer.Gender}&lt;/td&gt;
+            &lt;td&gt;${customer.Age}&lt;/td&gt;
+            &lt;td&gt;$${customer.Annual_Income}K&lt;/td&gt;
+            &lt;td&gt;${customer.Spending_Score}/100&lt;/td&gt;
+            &lt;td&gt;
+                &lt;button class="btn btn-sm btn-warning" onclick="editCustomer(${customer.CustomerID})"&gt;
+                    &lt;i class="bi bi-pencil"&gt;&lt;/i&gt;
+                &lt;/button&gt;
+                &lt;button class="btn btn-sm btn-danger" onclick="deleteCustomer(${customer.CustomerID})"&gt;
+                    &lt;i class="bi bi-trash"&gt;&lt;/i&gt;
+                &lt;/button&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    `).join('');
+}
+
+// Add new customer
+async function addCustomer() {
+    const gender = document.getElementById('addGender').value;
+    const age = document.getElementById('addAge').value;
+    const income = document.getElementById('addIncome').value;
+    const spending = document.getElementById('addSpending').value;
+    
+    try {
+        const response = await fetch(`${API_URL}/customers/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                Gender: gender,
+                Age: parseInt(age),
+                Annual_Income: parseInt(income),
+                Spending_Score: parseInt(spending)
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('✅ Customer added!');
+            loadCustomers(); // Refresh table
+        }
+    } catch (error) {
+        alert('❌ Failed to add customer');
+    }
+}
+
+// Delete customer
+async function deleteCustomer(customerId) {
+    if (!confirm('Delete this customer?')) return;
+    
+    try {
+        const response = await fetch(`${API_URL}/customers/${customerId}`, {
+            method: 'DELETE'
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('✅ Customer deleted!');
+            loadCustomers(); // Refresh table
+        }
+    } catch (error) {
+        alert('❌ Failed to delete');
+    }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', loadCustomers);</pre>
+            </div>
+
+            <!-- Common Issues -->
+            <h2><i class="bi bi-exclamation-triangle text-warning me-2"></i>Common Issues & Solutions</h2>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="info-box danger">
+                        <h6>❌ CORS Error</h6>
+                        <p class="small mb-2"><strong>Error:</strong> "Access-Control-Allow-Origin"</p>
+                        <p class="small mb-0"><strong>Solution:</strong> Install flask-cors di backend</p>
+                        <div class="code-block mt-2">
+                            <pre class="small">pip install flask-cors
+from flask_cors import CORS
+CORS(app)</pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="info-box danger">
+                        <h6>❌ Network Error</h6>
+                        <p class="small mb-2"><strong>Error:</strong> "Failed to fetch"</p>
+                        <p class="small mb-0"><strong>Solution:</strong> Pastikan Flask server jalan di http://127.0.0.1:5000</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="info-box danger">
+                        <h6>❌ 404 Not Found</h6>
+                        <p class="small mb-2"><strong>Error:</strong> API endpoint tidak ditemukan</p>
+                        <p class="small mb-0"><strong>Solution:</strong> Check URL dan Blueprint registration</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="info-box danger">
+                        <h6>❌ Data tidak muncul</h6>
+                        <p class="small mb-2"><strong>Error:</strong> Table kosong</p>
+                        <p class="small mb-0"><strong>Solution:</strong> Check Console (F12) untuk error messages</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testing Tips -->
+            <h2><i class="bi bi-bug text-info me-2"></i>Testing & Debugging Tips</h2>
+            
+            <div class="info-box info">
+                <h6><i class="bi bi-lightbulb me-2"></i>Pro Tips:</h6>
+                <ul class="mb-0">
+                    <li>✅ Selalu buka <strong>Browser Console</strong> (F12) untuk lihat errors</li>
+                    <li>✅ Gunakan <code>console.log(data)</code> untuk debug response</li>
+                    <li>✅ Test API di Postman dulu sebelum integrate ke frontend</li>
+                    <li>✅ Check Network Tab di DevTools untuk lihat HTTP requests</li>
+                    <li>✅ Pastikan Flask server tetap running!</li>
+                </ul>
+            </div>
+
+            <!-- Key Takeaways -->
+            <h2><i class="bi bi-bookmark-check text-success me-2"></i>Key Takeaways</h2>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="card border-0 bg-light">
+                        <div class="card-body">
+                            <h6 class="fw-bold">✅ Fetch API Basics:</h6>
+                            <ul class="mb-0 small">
+                                <li>GET - fetch data dari server</li>
+                                <li>POST - kirim data baru ke server</li>
+                                <li>PUT - update data yang ada</li>
+                                <li>DELETE - hapus data</li>
+                                <li>async/await untuk clean code</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 bg-light">
+                        <div class="card-body">
+                            <h6 class="fw-bold">✅ Integration Flow:</h6>
+                            <ul class="mb-0 small">
+                                <li>Fetch data dari API</li>
+                                <li>Parse JSON response</li>
+                                <li>Display di HTML (DOM manipulation)</li>
+                                <li>Auto-refresh setelah CRUD</li>
+                                <li>Error handling dengan try-catch</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-buttons">
+                <a href="sesi-3.html" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Sesi 3
+                </a>
+                <a href="sesi-5.html" class="btn btn-custom">
+                    Sesi 5: Finishing & Review<i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>
